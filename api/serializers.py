@@ -17,8 +17,8 @@ class ListItemSerializer(serializers.ModelSerializer):
 
 class TodoItemSerializer(serializers.ModelSerializer):
     '''Serializer for TodoItem model'''
-    created_at = django_filters.DateFromToRangeFilter()
-    list_items = ListItemSerializer(many= True, read_only = True)
+    created_at = django_filters.DateFromToRangeFilter(read_only=True)
+    list_items = ListItemSerializer(many= True)
 
 
     # Override the default create method to create a new todo item and related list items
