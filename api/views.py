@@ -4,7 +4,6 @@ from api.filters import CreationFilter
 
 from api.models import ListItem, TodoItem
 from api.serializers import ListItemSerializer, TodoItemSerializer
-# Create your views here.
 
 class TodoItemViewSet(viewsets.ModelViewSet):
     '''ViewSet for TodoItem model. Searchable by value and value of list_items.'''
@@ -12,7 +11,7 @@ class TodoItemViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
     filterset_class = CreationFilter
     serializer_class = TodoItemSerializer
-    search_fields = ['text_value', 'list_items_set__value']
+    search_fields = ['text_value', 'list_items__value']
     ordering_fields = ['created_at']
     filterset_fields = ['type', 'due_date']
     

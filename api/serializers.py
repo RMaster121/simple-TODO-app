@@ -6,19 +6,17 @@ from api.models import ListItem, TodoItem
 class ListItemSerializer(serializers.ModelSerializer):
     '''Serializer for ListItem model'''
     todo_item = serializers.PrimaryKeyRelatedField(
-        queryset=TodoItem.objects.all(), required=False, allow_null=True, default=None)
-
-    # Although todo_item is
+        queryset=TodoItem.objects.all(), required=False, write_only=True)
 
     class Meta:
         model = ListItem
-        fields = ['id', 'value', 'position', 'todo_item']
+        fields = ['id', 'value', 'checked', 'position', 'todo_item']
 
 
 class TodoItemSerializer(serializers.ModelSerializer):
     '''Serializer for TodoItem model'''
     created_at = django_filters.DateFromToRangeFilter(read_only=True)
-    list_items = ListItemSerializer(many= True)
+    list_items = ListItemSerializer(many=True, required=False, allow_null=True, default=[])
 
 
     # Override the default create method to create a new todo item and related list items
@@ -58,4 +56,4 @@ class TodoItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TodoItem
-        fields = ('id', 'type', 'title', 'due_date', 'created_at', 'text_value', 'url_value', 'list_items', )
+        fields = ['id', 'type', 'title', 'due_date', 'created_at', 'text_value', 'url_value', 'list_items']

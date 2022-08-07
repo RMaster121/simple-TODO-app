@@ -1,20 +1,17 @@
 from django.db import models
 from positions.fields import PositionField
 
-# Create your models here.
-
-
 class TodoItem(models.Model):
     '''Model representing a todo item'''
     id = models.AutoField(primary_key=True)
     type = models.CharField(max_length=1, choices=(
         ('T', 'String'), ('L', 'List'), ('U', 'URL')))
     title = models.CharField(max_length=200, blank=False, null=False)
-    due_date = models.DateField(null=True)
+    due_date = models.DateField(null=True, default=None)
     created_at = models.DateTimeField(auto_now_add=True)
 
     text_value = models.TextField(blank=True, max_length=500)
-    url_value = models.URLField(blank=True)  # TODO: add validator/test it
+    url_value = models.URLField(blank=True)  
 
 
 class ListItem(models.Model):
